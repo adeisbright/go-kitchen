@@ -1,0 +1,58 @@
+.brand-call {
+    background: #06aed5;
+    padding-top: 2rem;
+    padding-bottom: 10rem;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+}
+a.brand-title,
+a.brand-title:hover {
+    font-size: 1.9rem;
+    color: #fff;
+    padding: 1rem;
+    font-weight: 850;
+    line-height: 1.3;
+    vertical-align: center;
+    text-decoration: none;
+}
+
+.main-navigation {
+    padding-top: 0.5rem;
+}
+.main-navigation a,
+.main-navigation a:hover {
+    margin-right: 1rem;
+    color: #fff;
+    font-size: 1.1rem;
+    text-decoration: none;
+    margin-bottom: 2rem;
+}
+
+.login {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 24px;
+}
+.hero {
+    color: #fff;
+    /* background: #000;
+    background: url("../../static/images/rose-3407234_960_720.webp"); */
+}
+#reg-form {
+    color: #000;
+}
+input[type="submit"] {
+    background: #f2f4f3;
+    color: #000;
+}
+
+.hero-explain {
+    padding-right: 2rem;
+}
+
+.bg-dark {
+    background: #000;
+    color: #fff;
+    padding: 1rem;
+    border-radius: 10px;
+}
