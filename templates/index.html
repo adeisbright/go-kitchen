@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0">
+    <title>{{ .Title }}</title>
+    <link rel="stylesheet" href="/static/css/easyframer.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <section class="brand-call m-b-2">
+        <header>
+            <section class="framer m-b-2">  
+                <div class="d-flex wrap justify-between">
+                    <div class="brand-detail">
+                        <h1>
+                            <a class="brand-title">
+                                GoK
+                            </a>
+                        </h1>
+                    </div>
+                    <nav class="main-navigation"> 
+                        <a href="/">Overview</a>
+                        <a href="/">Explore</a>
+                        <a href="/">Discussions</a>
+                        <a href="/login" class="login">Sign in</a>
+                    </nav>
+                </div>
+            </section>
+        </header>
+        <section class="after-fixed-top hero framer ">
+            <section id="hero" class="d-flex wrap" style="align-items: center;">
+                <div class="fr-md-6 hero-explain">
+                    <h2>{{ .Title}} -  {{ .Tagline}} </h2>
+                    <p> {{ .Text }}</p>
+                </div>
+                <div class="fr-md-6 fr-12">
+                    <form class="bg-white shadow radius-5 pad-5" id="reg-form" action="/register" method="post">
+                        <h2 class="dark-text center-text">Sign up today</h2>
+                        <label for="email">Email</label>
+                        <input type="email" placeholder="Email" name="email" id="email" class="form-input">
+                        <label for="password">Password</label>
+                        <input type="password"  name="password" id="password" class="form-input" autocomplete="false">
+                        <label for="confirm password">Confirm Password</label>
+                        <input type="password" name="cpassword" id="cpassword" class="form-input" autocomplete="false">
+                        <input type="submit" class="form-input">
+                        <p>All Fields are mandatory</p>
+                    </form>
+                </div>
+            </section>
+           
+        </section>
+    </section>
+    <main>
+        <div class="framer d-flex">
+            {{range .Activities}}
+                {{ if .Done }} 
+                    <div class="bg-dark white-text fr-md-6 justify-between">
+                        {{ .Title}}
+                    </div>
+                {{ else }}
+                    <div>
+                        {{ .Title}}
+                    </div>
+                {{ end }}
+            {{ end }}
+        </div>
+    </main>
+    <footer>
+        <p class="center-text">Copyright &copy; Adeleke Bright Ipenko <span id="yearPlaceholder"></span></p>
+    </footer>
+    <script>
+        document.querySelector("#yearPlaceholder").textContent = new Date().getFullYear()
+    </script>
+    
+</body>
+</html>
