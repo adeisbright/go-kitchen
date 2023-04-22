@@ -109,7 +109,7 @@ func ErrorHandler(w http.ResponseWriter, message string, statusCode int) {
 
 	resp["message"] = message
 
-	// Stringnigy or marshal the map
+	// Stringnify or marshal the map
 	json, _ := json.Marshal(resp)
 
 	w.Write(json)
@@ -158,12 +158,97 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func handleOverviewVisit(w http.ResponseWriter, r *http.Request) {
+	overviewTemplate, _ := template.ParseFiles("./templates/overview.html")
+	type Event struct {
+		Title       string
+		Description string
+		Address     string
+		Date        string
+		ToAttend    bool
+	}
+
+	type TemplateData struct {
+		Title  string
+		Events []Event
+	}
+
+	data := TemplateData{
+		Title: "Welcome",
+		Events: []Event{
+			{
+				Title:       "Bigjara LogN Community Meetup",
+				Description: "A meeting for those interested in Bigjara",
+				Address:     "KM 25 Lekki Epe Expressway, Dominion Plaza",
+				Date:        "April 29th 2023, 10AM",
+				ToAttend:    false,
+			},
+			{
+				Title:       "Bigjara Lite BootCamp",
+				Description: "This is a two weeks training on Machine Learning",
+				Address:     "KM 25 Lekki Epe Expressway, Dominion Plaza",
+				Date:        "May 6th 2023, 10AM",
+				ToAttend:    true,
+			},
+		},
+	}
+
+	if r.Method == "GET" {
+		overviewTemplate.Execute(w, data)
+	} else if r.Method == "POST" {
+		r.ParseForm()
+		for key, value := range r.Form {
+			fmt.Printf("key %v value %v \n", key, value)
+			//çbreak
+		}
+
+		title := template.HTMLEscapeString(r.Form.Get("title"))
+		description := r.PostFormValue("description")
+		data := TemplateData{
+			Title: "Form Submitted",
+			Events: []Event{
+				{
+					Title:       title,
+					Address:     "Empty",
+					Description: description,
+					Date:        "",
+					ToAttend:    true,
+				},
+			},
+		}
+		//overviewTemplate.Execute(w, data)
+
+		json, _ := json.Marshal(data)
+		w.Header().Set("Content-Type", "application/json")
+		w.Header().Set("Token", "123456")
+		w.WriteHeader(http.StatusOK) //Sends a HTTP respnose header with the given  code as the provided one
+		w.Write(json)
+	}
+}
+
+func testHandler(w http.ResponseWriter, r *http.Request) {
+	hasUserName := r.URL.Query().Has("name")
+	userName := r.URL.Query().Get("name")
+	if hasUserName {
+		fmt.Printf("%v , %v", "The user name is ", userName)
+
+	} else {
+		fmt.Printf("%v , %v", "This visitor has no name. Then ", "anonymous")
+	}
+
+	fmt.Fprintf(w, "You were the f**ked dude he warned us about")
+}
+
 func main() {
+	fmt.Println("The server is now listening on port 8080")
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/static/", http.StripPrefix("/static", fs))
 
 	http.HandleFunc("/", indexHandler)
+	http.HandleFunc("/overview", handleOverviewVisit)
 	http.HandleFunc("/register", handleRegistration)
 	http.HandleFunc("/login", handleLogin)
+	http.HandleFunc("/test", testHandler)
 	http.ListenAndServe(HOST+":"+PORT, nil)
+
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ .Title}} </title>
+    <link rel="stylesheet" href="/static/css/easyframer.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <p>Below, we showcase what we do. We do those things very well and you will like them</p>
+    <ul>
+        {{range  .Events}}
+            {{if .ToAttend}}
+                <li> {{ .Title}} - Going </li>
+            {{else}}
+                <li> {{ .Title }} - Not Going </li>
+            {{end}}
+        {{end}}
+    </ul>
+    <section class="framer">
+    <form method="POST" action="/overview">
+        <input type="search" placeholder="Search Go" class="input" name="title">
+        <textarea name="description" class="input" title="description"></textarea>
+        <button class="btn bg-dark" type="submit">Search</button>
+    </form>
+    </section>
+</body>
+</html>
